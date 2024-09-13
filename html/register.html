@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/register.css" />
+</head>
+
+<body>
+    <div class="form">
+        <h1>Register</h1>
+        <form action="">
+            <input class="username" type="text" placeholder="Username" />
+            <div class="box-password">
+                <input class="password" type="password" placeholder="New Password" />
+                <i class="fa-regular fa-eye password-eye"></i>
+            </div>
+            <div class="box-password">
+                <input class="repeat-password" type="password" placeholder="Confirm New Password" />
+                <i class="fa-regular fa-eye repeat-password-eye"></i>
+            </div>
+            <div class="error"></div>
+            <button type="submit">Create a new account</button>
+            <hr>
+            <p class="asking">
+                Do you have an account?
+                <a href="../html/login.html"> Log in</a>
+            </p>
+        </form>
+    </div>
+
+    <script src="../javascript/register.js"></script>
+</body>
+
+</html>
