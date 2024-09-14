@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterDropdown = document.getElementById("filter");
   const cancelButton = document.getElementById("cancel");
 
-  // Handle Enter keydown
   function handleEnterKeydown(event) {
     if (event.key === "Enter") {
       addButton.click();
@@ -14,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   todoInput.addEventListener("keydown", handleEnterKeydown);
 
-  // Handle ESC keydown
   function handleEscKeydown(event) {
     if (event.key === "Escape") {
       cancelButton.click();
@@ -22,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   todoInput.addEventListener("keydown", handleEscKeydown);
 
-  // Handle cancel button
   function clearTodoInput() {
     todoInput.value = "";
   }
@@ -44,12 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   checkLoggedIn();
 
-  // Handle logout button
-  logoutButton.addEventListener("click", function () {
+  function handleLogout() {
     localStorage.removeItem("LOGGED_IN_USER");
     sessionStorage.removeItem("LOGGED_IN_USER");
     window.location.href = "../html/login.html";
-  });
+  }
+  logoutButton.addEventListener("click", handleLogout);
 
   // Get userId from localStorage
   function getUserId() {
@@ -64,15 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Save task to localStorage
   function addTaskToLocalStorage(task) {
     const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
     tasks.push(task);
     localStorage.setItem("TASKS", JSON.stringify(tasks));
   }
 
-  // Add new task
-  addButton.addEventListener("click", function () {
+  function addTaskToUi() {
     const taskName = todoInput.value.trim();
     const userId = getUserId();
     if (taskName !== "") {
@@ -90,21 +85,20 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       alert("Please enter task name!");
     }
-  });
+  }
+  addButton.addEventListener("click", addTaskToUi);
 
-  // Remove task from localStorage
   function removeTaskFromLocalStorage(taskId) {
-    let tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
-    tasks = tasks.filter(function (task) {
+    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+    const userTasks = tasks.filter(function (task) {
       return task.taskId !== taskId;
     });
-    localStorage.setItem("TASKS", JSON.stringify(tasks));
+    localStorage.setItem("TASKS", JSON.stringify(userTasks));
   }
 
-  // Update task in localStorage
   function updateTaskInLocalStorage(taskId, taskName, status = "uncompleted") {
-    let tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
-    tasks = tasks.map(function (task) {
+    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+    const userTasks = tasks.map(function (task) {
       if (task.taskId === taskId) {
         return {
           ...task,
@@ -114,10 +108,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return task;
     });
-    localStorage.setItem("TASKS", JSON.stringify(tasks));
+    localStorage.setItem("TASKS", JSON.stringify(userTasks));
   }
 
-  // Show task from localStorage
   function displayTasks() {
     const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
     const currentUserId = getUserId();
@@ -149,15 +142,14 @@ document.addEventListener("DOMContentLoaded", function () {
       deleteButton.textContent = "Delete";
       deleteButton.className = "delete";
 
-      // Delete task
-      deleteButton.addEventListener("click", function () {
+      function deleteTask() {
         todoList.removeChild(taskDiv);
         removeTaskFromLocalStorage(task.taskId);
         filterTasks();
-      });
+      }
+      deleteButton.addEventListener("click", deleteTask);
 
-      // Edit task
-      editButton.addEventListener("click", function () {
+      function editTask() {
         const taskInput = document.createElement("input");
         taskInput.type = "text";
         taskInput.value = taskSpan.textContent;
@@ -173,10 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
           taskDiv.replaceChild(editButton, saveButton);
           updateTaskInLocalStorage(task.taskId, taskSpan.textContent);
         });
-      });
+      }
+      editButton.addEventListener("click", editTask);
 
-      // Checkbox task
-      checkbox.addEventListener("change", function () {
+      function handleCheckboxTask() {
         if (checkbox.checked) {
           taskDiv.classList.add("completed");
           todoList.appendChild(taskDiv);
@@ -187,7 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         updateTaskInLocalStorage(task.taskId, task.taskName, task.status);
         filterTasks();
-      });
+      }
+      checkbox.addEventListener("change", handleCheckboxTask);
 
       taskDiv.appendChild(checkbox);
       taskDiv.appendChild(taskSpan);
@@ -197,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Filter task
   function filterTasks() {
     const filterValue = filterDropdown.value;
     const tasks = todoList.querySelectorAll(".todo-item");

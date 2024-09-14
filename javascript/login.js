@@ -3,8 +3,9 @@ const userLocal = JSON.parse(localStorage.getItem("USER_INFO")) || [];
 const userName = document.querySelector(".username");
 const password = document.querySelector(".password");
 const rememberMe = document.querySelector(".remember-me");
+const eyePassword = document.querySelector(".password-eye");
 
-formSignIn.addEventListener("submit", function (event) {
+function handleLogin(event) {
   event.preventDefault();
   for (let i = 0; i < userLocal.length; i++) {
     if (
@@ -27,16 +28,25 @@ formSignIn.addEventListener("submit", function (event) {
     }
   }
   alert("Invalid username or password.");
-});
+}
+formSignIn.addEventListener("submit", handleLogin);
 
-document.addEventListener("DOMContentLoaded", function () {
-  const loggedInUser = JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
-  if (loggedInUser && loggedInUser.loggedIn) {
+function handleDOMContentLoaded() {
+  const storage = {
+    local: JSON.parse(localStorage.getItem("LOGGED_IN_USER")),
+    session: JSON.parse(sessionStorage.getItem("LOGGED_IN_USER")),
+  };
+
+  if (
+    (storage.local && storage.local.loggedIn) ||
+    (storage.session && storage.session.loggedIn)
+  ) {
     window.location.href = "../html/main.html";
   }
-});
+}
+document.addEventListener("DOMContentLoaded", handleDOMContentLoaded);
 
-const eyePassword = document.querySelector(".password-eye");
-eyePassword.addEventListener("click", function () {
+function handleEyePassword() {
   password.type = password.type === "password" ? "text" : "password";
-});
+}
+eyePassword.addEventListener("click", handleEyePassword);

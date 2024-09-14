@@ -3,13 +3,15 @@ const userName = document.querySelector(".username");
 const password = document.querySelector(".password");
 const repeatPassword = document.querySelector(".repeat-password");
 const error = document.querySelector(".error");
+const eyePassword = document.querySelector(".password-eye");
+const eyeRepeatPassword = document.querySelector(".repeat-password-eye");
 const users = JSON.parse(localStorage.getItem("USER_INFO")) || [];
 
 function generateUserId() {
   return btoa(userName.value) + Date.now();
 }
 
-formSignUp.addEventListener("submit", function (event) {
+function handleRegister(event) {
   event.preventDefault();
   const isUserExist = users.some(function (user) {
     return user.userName === userName.value;
@@ -32,24 +34,31 @@ formSignUp.addEventListener("submit", function (event) {
     localStorage.removeItem("LOGGED_IN_USER");
     window.location.href = "../html/login.html";
   }
-});
+}
+formSignUp.addEventListener("submit", handleRegister);
 
-document.addEventListener("DOMContentLoaded", function () {
-  const loggedInUser = JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
-  if (loggedInUser && loggedInUser.isRememberMe) {
+function handleDOMContentLoaded() {
+  const storage = {
+    local: JSON.parse(localStorage.getItem("LOGGED_IN_USER")),
+    session: JSON.parse(sessionStorage.getItem("LOGGED_IN_USER")),
+  };
+
+  if (
+    (storage.local && storage.local.loggedIn) ||
+    (storage.session && storage.session.loggedIn)
+  ) {
     window.location.href = "../html/main.html";
-  } else {
-    localStorage.removeItem("LOGGED_IN_USER");
   }
-});
+}
+document.addEventListener("DOMContentLoaded", handleDOMContentLoaded);
 
-const eyePassword = document.querySelector(".password-eye");
-eyePassword.addEventListener("click", function () {
+function handleEyePassword() {
   password.type = password.type === "password" ? "text" : "password";
-});
+}
 
-const eyeRepeatPassword = document.querySelector(".repeat-password-eye");
-eyeRepeatPassword.addEventListener("click", function () {
+function handleEyeRepeatPassword() {
   repeatPassword.type =
     repeatPassword.type === "password" ? "text" : "password";
-});
+}
+eyePassword.addEventListener("click", handleEyePassword);
+eyeRepeatPassword.addEventListener("click", handleEyeRepeatPassword);
