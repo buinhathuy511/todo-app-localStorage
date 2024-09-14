@@ -1,121 +1,119 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    margin: 0;
-    flex-direction: column;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+  flex-direction: column;
 }
 
 #welcome-message {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-#id-logout-button {
-    padding: 10px 20px;
-    background-color: rgb(63, 118, 255);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
+#logout-button {
+  padding: 10px 20px;
+  background-color: rgb(63, 118, 255);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-#id-logout-button:hover {
-    background-color: rgb(66, 105, 202);
+#logout-button:hover {
+  background-color: rgb(66, 105, 202);
 }
 .todo-container {
-    width: 320px;
-    text-align: center;
+  width: 320px;
+  text-align: center;
 }
 
 /* style for element list in todo-input */
 .todo-input-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .todo-input {
-    flex-grow: 1;
-    padding: 5px;
+  flex-grow: 1;
+  padding: 5px;
 }
 
 .todo-input-container button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    background-color: rgb(63, 118, 255);
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin-left: 5px;
+  padding: 5px 10px;
+  background-color: rgb(63, 118, 255);
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .todo-input-container button:hover {
-    background-color: rgb(66, 105, 202);
+  background-color: rgb(66, 105, 202);
 }
 
-.todo-input-container button#id-cancel {
-    background-color: red;
+.todo-input-container button#cancel {
+  background-color: red;
 }
 
 .todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .todo-item span {
-    flex-grow: 1;
-    margin-left: 10px;
+  flex-grow: 1;
+  margin-left: 10px;
 }
 
 .todo-item button {
-    margin-left: 5px;
-    padding: 5px;
-    background-color: rgb(63, 118, 255);
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin-left: 5px;
+  padding: 5px;
+  background-color: rgb(63, 118, 255);
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .todo-item button:hover {
-    background-color: rgb(66, 105, 202);
+  background-color: rgb(66, 105, 202);
 }
 
 .todo-item button.delete {
-    background-color: red;
+  background-color: red;
 }
 
 /* style for element list in todo-list */
 .todo-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .todo-list button {
-    margin-left: 5px;
-    padding: 5px;
-    background-color: rgb(63, 118, 255);
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin-left: 5px;
+  padding: 5px;
+  background-color: rgb(63, 118, 255);
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .filter-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
-#id-filter {
-    padding: 5px;
+#filter {
+  padding: 5px;
 }
 
 /* Check task CSS */
 .completed span {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
-
-

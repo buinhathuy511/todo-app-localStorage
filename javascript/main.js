@@ -1,29 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const todoInput = document.getElementById("id-todo-input");
-  const addButton = document.getElementById("id-add-button");
-  const todoList = document.getElementById("id-todo-list");
-  const logoutButton = document.getElementById("id-logout-button");
-  const filterDropdown = document.getElementById("id-filter");
-  const cancelButton = document.getElementById("id-cancel");
+  const todoInput = document.getElementById("todo-input");
+  const addButton = document.getElementById("add-button");
+  const todoList = document.getElementById("todo-list");
+  const logoutButton = document.getElementById("logout-button");
+  const filterDropdown = document.getElementById("filter");
+  const cancelButton = document.getElementById("cancel");
 
-  // Click enter to add task
-  todoInput.addEventListener("keydown", function (event) {
+  // Handle Enter keydown
+  function handleEnterKeydown(event) {
     if (event.key === "Enter") {
       addButton.click();
     }
-  });
+  }
+  todoInput.addEventListener("keydown", handleEnterKeydown);
 
-  // Click esc to cancel input task
-  todoInput.addEventListener("keydown", function (event) {
+  // Handle ESC keydown
+  function handleEscKeydown(event) {
     if (event.key === "Escape") {
       cancelButton.click();
     }
-  });
+  }
+  todoInput.addEventListener("keydown", handleEscKeydown);
 
-  // Handle cancel
-  cancelButton.addEventListener("click", function () {
+  // Handle cancel button
+  function clearTodoInput() {
     todoInput.value = "";
-  });
+  }
+  cancelButton.addEventListener("click", clearTodoInput);
 
   // Check login with "Remember Me"
   function checkLoggedIn() {
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   checkLoggedIn();
 
-  // Handle Logout
+  // Handle logout button
   logoutButton.addEventListener("click", function () {
     localStorage.removeItem("LOGGED_IN_USER");
     sessionStorage.removeItem("LOGGED_IN_USER");
@@ -202,12 +205,15 @@ document.addEventListener("DOMContentLoaded", function () {
     tasks.forEach((task) => {
       const isCompleted = task.classList.contains("completed");
 
-      if (filterValue === "all") {
-        task.style.display = "flex";
-      } else if (filterValue === "done") {
-        task.style.display = isCompleted ? "flex" : "none";
-      } else if (filterValue === "undone") {
-        task.style.display = isCompleted ? "none" : "flex";
+      switch (filterValue) {
+        case "all":
+          task.style.display = "flex";
+          break;
+        case "done":
+          task.style.display = isCompleted ? "flex" : "none";
+          break;
+        case "undone":
+          task.style.display = isCompleted ? "none" : "flex";
       }
     });
   }
