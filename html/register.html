@@ -9,6 +9,7 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/register.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
 <body>
@@ -26,6 +27,14 @@
             </div>
             <div class="error"></div>
             <button type="submit">Create a new account</button>
+            <p class="password-requirements-notification">Passwords must meet the following requirements:</p>
+            <div id="password-requirements" class="password-requirements">
+                <p id="length-requirement">At least 8 characters length</p>
+                <p id="uppercase-requirement">At least 1 uppercase</p>
+                <p id="lowercase-requirement">At least 1 lowercase</p>
+                <p id="digit-requirement">At least 1 number</p>
+                <p id="special-character-requirement">At least 1 special character</p>
+            </div>
             <hr>
             <p class="asking">
                 Do you have an account?
@@ -34,7 +43,7 @@
         </form>
     </div>
 
-    <script src="../javascript/register.js"></script>
+    <script type="module" src="../javascript/register.js"></script>
 </body>
 
 </html>

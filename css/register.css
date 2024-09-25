@@ -73,3 +73,23 @@ body {
   padding: 5px 5px;
   margin: -10px 0 5px 0;
 }
+
+.password-requirements-notification {
+  font-size: 15px;
+  padding: 5px 5px;
+}
+
+.password-requirements p {
+  font-size: 12px;
+  padding-left: 25px;
+  font-weight: normal;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, font-weight 0.3s ease;
+}
+
+.password-requirements p.active {
+  font-size: 12px;
+  padding-left: 25px;
+  opacity: 1;
+  font-weight: bolder;
+}

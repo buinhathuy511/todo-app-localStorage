@@ -1,3 +1,5 @@
+import { localStorageKey } from "../constants.js";
+
 const formSignIn = document.querySelector(".form");
 const userLocal = JSON.parse(localStorage.getItem("USER_INFO")) || [];
 const userName = document.querySelector(".username");
@@ -19,9 +21,15 @@ function handleLogin(event) {
         loggedIn: true,
       };
       if (rememberMe.checked) {
-        localStorage.setItem("LOGGED_IN_USER", JSON.stringify(userData));
+        localStorage.setItem(
+          localStorageKey.logged_in_user,
+          JSON.stringify(userData)
+        );
       } else {
-        sessionStorage.setItem("LOGGED_IN_USER", JSON.stringify(userData));
+        sessionStorage.setItem(
+          localStorageKey.logged_in_user,
+          JSON.stringify(userData)
+        );
       }
       window.location.href = "../html/main.html";
       return;
@@ -33,8 +41,8 @@ formSignIn.addEventListener("submit", handleLogin);
 
 function handleDOMContentLoaded() {
   const storage = {
-    local: JSON.parse(localStorage.getItem("LOGGED_IN_USER")),
-    session: JSON.parse(sessionStorage.getItem("LOGGED_IN_USER")),
+    local: JSON.parse(localStorage.getItem(localStorageKey.logged_in_user)),
+    session: JSON.parse(sessionStorage.getItem(localStorageKey.logged_in_user)),
   };
 
   if (

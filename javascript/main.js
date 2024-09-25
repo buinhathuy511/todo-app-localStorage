@@ -1,3 +1,5 @@
+import { localStorageKey, taskStatus } from "../constants.js";
+
 document.addEventListener("DOMContentLoaded", function () {
   const todoInput = document.getElementById("todo-input");
   const addButton = document.getElementById("add-button");
@@ -28,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Check login with "Remember Me"
   function checkLoggedIn() {
     const loggedInUser =
-      localStorage.getItem("LOGGED_IN_USER") ||
-      sessionStorage.getItem("LOGGED_IN_USER");
+      localStorage.getItem(localStorageKey.logged_in_user) ||
+      sessionStorage.getItem(localStorageKey.logged_in_user);
     if (!loggedInUser) {
       window.location.href = "../html/login.html";
     } else {
@@ -42,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
   checkLoggedIn();
 
   function handleLogout() {
-    localStorage.removeItem("LOGGED_IN_USER");
-    sessionStorage.removeItem("LOGGED_IN_USER");
+    localStorage.removeItem(localStorageKey.logged_in_user);
+    sessionStorage.removeItem(localStorageKey.logged_in_user);
     window.location.href = "../html/login.html";
   }
   logoutButton.addEventListener("click", handleLogout);
@@ -51,8 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Get userId from localStorage
   function getUserId() {
     const loggedInUser = JSON.parse(
-      localStorage.getItem("LOGGED_IN_USER") ||
-        sessionStorage.getItem("LOGGED_IN_USER")
+      localStorage.getItem(localStorageKey.logged_in_user) ||
+        sessionStorage.getItem(localStorageKey.logged_in_user)
     );
     if (loggedInUser) {
       return loggedInUser.userId;
@@ -62,9 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function addTaskToLocalStorage(task) {
-    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+    const tasks = JSON.parse(localStorage.getItem(localStorageKey.tasks)) || [];
     tasks.push(task);
-    localStorage.setItem("TASKS", JSON.stringify(tasks));
+    localStorage.setItem(localStorageKey.tasks, JSON.stringify(tasks));
   }
 
   function addTaskToUi() {
@@ -76,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         taskId: taskId,
         taskName: taskName,
         ownerId: userId,
-        status: "uncompleted",
+        status: taskStatus.uncompleted,
       };
       addTaskToLocalStorage(task);
       displayTasks();
@@ -89,15 +91,19 @@ document.addEventListener("DOMContentLoaded", function () {
   addButton.addEventListener("click", addTaskToUi);
 
   function removeTaskFromLocalStorage(taskId) {
-    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+    const tasks = JSON.parse(localStorage.getItem(localStorageKey.tasks)) || [];
     const userTasks = tasks.filter(function (task) {
       return task.taskId !== taskId;
     });
-    localStorage.setItem("TASKS", JSON.stringify(userTasks));
+    localStorage.setItem(localStorageKey.tasks, JSON.stringify(userTasks));
   }
 
-  function updateTaskInLocalStorage(taskId, taskName, status = "uncompleted") {
-    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+  function updateTaskInLocalStorage(
+    taskId,
+    taskName,
+    status = taskStatus.uncompleted
+  ) {
+    const tasks = JSON.parse(localStorage.getItem(localStorageKey.tasks)) || [];
     const userTasks = tasks.map(function (task) {
       if (task.taskId === taskId) {
         return {
@@ -108,11 +114,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return task;
     });
-    localStorage.setItem("TASKS", JSON.stringify(userTasks));
+    localStorage.setItem(localStorageKey.tasks, JSON.stringify(userTasks));
   }
 
   function displayTasks() {
-    const tasks = JSON.parse(localStorage.getItem("TASKS")) || [];
+    const tasks = JSON.parse(localStorage.getItem(localStorageKey.tasks)) || [];
     const currentUserId = getUserId();
     todoList.innerHTML = "";
 
@@ -124,13 +130,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const taskDiv = document.createElement("div");
       taskDiv.className = "todo-item";
 
-      if (task.status === "completed") {
-        taskDiv.classList.add("completed");
+      if (task.status === taskStatus.completed) {
+        taskDiv.classList.add(taskStatus.completed);
       }
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.checked = task.status === "completed";
+      checkbox.checked = task.status === taskStatus.completed;
 
       const taskSpan = document.createElement("span");
       taskSpan.textContent = task.taskName;
@@ -170,12 +176,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function handleCheckboxTask() {
         if (checkbox.checked) {
-          taskDiv.classList.add("completed");
+          taskDiv.classList.add(taskStatus.completed);
           todoList.appendChild(taskDiv);
-          task.status = "completed";
+          task.status = taskStatus.completed;
         } else {
-          taskDiv.classList.remove("completed");
-          task.status = "uncompleted";
+          taskDiv.classList.remove(taskStatus.completed);
+          task.status = taskStatus.uncompleted;
         }
         updateTaskInLocalStorage(task.taskId, task.taskName, task.status);
         filterTasks();
@@ -195,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tasks = todoList.querySelectorAll(".todo-item");
 
     tasks.forEach((task) => {
-      const isCompleted = task.classList.contains("completed");
+      const isCompleted = task.classList.contains(taskStatus.completed);
 
       switch (filterValue) {
         case "all":
